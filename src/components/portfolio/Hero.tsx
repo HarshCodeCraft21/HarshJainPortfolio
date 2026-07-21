@@ -1,4 +1,3 @@
-import { motion, useMotionValue, useSpring } from "framer-motion";
 import { ArrowRight, Download, Github, Linkedin, Mail, Rocket } from "lucide-react";
 import {
   SiExpress,
@@ -23,44 +22,12 @@ const TECH_PILLS = [
   { label: "Tailwind CSS", Icon: SiTailwindcss, position: "bottom-0 right-[16%]" },
 ];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  show: (delay = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.75, delay, ease: [0.22, 1, 0.36, 1] as const },
-  }),
-};
-
 function ProfilePortrait() {
-  const rotateX = useSpring(useMotionValue(0), { stiffness: 120, damping: 18 });
-  const rotateY = useSpring(useMotionValue(0), { stiffness: 120, damping: 18 });
-
   return (
-    <motion.div
-      variants={fadeUp}
-      initial="hidden"
-      animate="show"
-      custom={0.2}
-      className="relative mx-auto w-full max-w-[30rem] py-4 sm:py-6"
-    >
+    <div className="relative mx-auto w-full max-w-[30rem] py-4 sm:py-6">
       <div aria-hidden className="absolute inset-[14%] rounded-full bg-[#D6B37A]/20 blur-[90px]" />
-      <motion.div
-        onPointerMove={(event) => {
-          const bounds = event.currentTarget.getBoundingClientRect();
-          rotateX.set(((event.clientY - bounds.top) / bounds.height - 0.5) * -7);
-          rotateY.set(((event.clientX - bounds.left) / bounds.width - 0.5) * 7);
-        }}
-        onPointerLeave={() => {
-          rotateX.set(0);
-          rotateY.set(0);
-        }}
-        style={{ rotateX, rotateY, transformPerspective: 1000 }}
-        className="relative mx-auto aspect-square w-[min(100%,24rem)]"
-      >
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 36, repeat: Infinity, ease: "linear" }}
+      <div className="relative mx-auto aspect-square w-[min(100%,24rem)]">
+        <div
           aria-hidden
           className="absolute inset-0 rounded-full border border-dashed border-[#D6B37A]/30"
         />
@@ -82,25 +49,18 @@ function ProfilePortrait() {
           aria-hidden
           className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_center,transparent_55%,#0B0B0B_93%)]"
         />
-      </motion.div>
+      </div>
 
-      {TECH_PILLS.map(({ label, Icon, position }, index) => (
-        <motion.div
+      {TECH_PILLS.map(({ label, Icon, position }) => (
+        <div
           key={label}
-          animate={{ y: [0, -7, 0] }}
-          transition={{
-            duration: 4.8 + index * 0.35,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: index * 0.2,
-          }}
           className={`absolute z-10 hidden items-center gap-2 rounded-full border border-[#E7C78A]/25 bg-[#151515]/70 px-3 py-2 text-[11px] font-medium text-[#F8F8F8] shadow-[0_10px_30px_-16px_rgba(214,179,122,0.8)] backdrop-blur-xl md:inline-flex ${position}`}
         >
           <Icon className="h-3.5 w-3.5 text-[#D6B37A]" />
           {label}
-        </motion.div>
+        </div>
       ))}
-    </motion.div>
+    </div>
   );
 }
 
@@ -148,13 +108,13 @@ export function Hero() {
         <div className="absolute left-0 right-0 top-[22%] h-px bg-gradient-to-r from-transparent via-[#D6B37A]/20 to-transparent" />
         <div className="absolute bottom-[18%] left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
         {[
-          { top: "16%", left: "15%", duration: 5 },
-          { top: "24%", left: "82%", duration: 6 },
-          { top: "63%", left: "8%", duration: 7 },
-          { top: "77%", left: "75%", duration: 5.5 },
-          { top: "46%", left: "54%", duration: 6.5 },
+          { top: "16%", left: "15%" },
+          { top: "24%", left: "82%" },
+          { top: "63%", left: "8%" },
+          { top: "77%", left: "75%" },
+          { top: "46%", left: "54%" },
         ].map((particle, index) => (
-          <motion.span
+          <span
             key={index}
             className="absolute h-1 w-1 rounded-full bg-[#E7C78A]"
             style={{
@@ -162,8 +122,6 @@ export function Hero() {
               left: particle.left,
               boxShadow: "0 0 10px rgba(231,199,138,0.8)",
             }}
-            animate={{ opacity: [0.15, 0.9, 0.15], y: [0, -10, 0] }}
-            transition={{ duration: particle.duration, repeat: Infinity, ease: "easeInOut" }}
           />
         ))}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,#0B0B0B_100%)]" />
@@ -172,32 +130,14 @@ export function Hero() {
       <div className="mx-auto w-full max-w-6xl">
         <div className="grid items-center gap-6 lg:grid-cols-12 lg:gap-6">
           <div className="relative z-10 text-center lg:col-span-7 lg:text-left">
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              animate="show"
-              custom={0}
-              className="inline-flex items-center gap-2 rounded-full border border-[#D6B37A]/35 bg-[#151515]/60 px-3.5 py-2 text-xs font-medium text-[#E7C78A] backdrop-blur-xl"
-            >
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#D6B37A]/35 bg-[#151515]/60 px-3.5 py-2 text-xs font-medium text-[#E7C78A] backdrop-blur-xl">
               <Rocket className="h-3.5 w-3.5" />
               Full Stack Developer
-            </motion.div>
-            <motion.p
-              variants={fadeUp}
-              initial="hidden"
-              animate="show"
-              custom={0.1}
-              className="mt-6 text-xs uppercase tracking-[0.42em] text-neutral-500"
-            >
+            </div>
+            <p className="mt-6 text-xs uppercase tracking-[0.42em] text-neutral-500">
               Hi, I&apos;m
-            </motion.p>
-            <motion.h1
-              variants={fadeUp}
-              initial="hidden"
-              animate="show"
-              custom={0.18}
-              className="mt-3 font-sans text-[clamp(4rem,9vw,6.25rem)] font-semibold leading-[0.84] tracking-[-0.065em] text-[#F8F8F8]"
-            >
+            </p>
+            <h1 className="mt-3 font-sans text-[clamp(4rem,9vw,6.25rem)] font-semibold leading-[0.84] tracking-[-0.065em] text-[#F8F8F8]">
               HARSH
               <span
                 className="mt-2 block bg-gradient-to-br font-bold tracking-[-0.025em] from-[#F8F8F8] via-[#E7C78A] to-[#A9844E] bg-clip-text text-transparent"
@@ -205,34 +145,16 @@ export function Hero() {
               >
                 JAIN
               </span>
-            </motion.h1>
-            <motion.h2
-              variants={fadeUp}
-              initial="hidden"
-              animate="show"
-              custom={0.28}
-              className="mx-auto mt-6 max-w-xl text-2xl font-medium leading-tight tracking-[-0.03em] text-[#F8F8F8] sm:text-3xl lg:mx-0"
-            >
+            </h1>
+            <h2 className="mx-auto mt-6 max-w-xl text-2xl font-medium leading-tight tracking-[-0.03em] text-[#F8F8F8] sm:text-3xl lg:mx-0">
               Building Scalable Web Applications{" "}
               <span className="text-[#D6B37A]">with Modern Technologies</span>
-            </motion.h2>
-            <motion.p
-              variants={fadeUp}
-              initial="hidden"
-              animate="show"
-              custom={0.36}
-              className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-neutral-400 lg:mx-0 sm:text-base"
-            >
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-neutral-400 lg:mx-0 sm:text-base">
               I craft scalable, secure and modern web applications with a strong focus on user
               experience, performance, and clean architecture.
-            </motion.p>
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              animate="show"
-              custom={0.44}
-              className="mt-6 flex flex-col justify-center gap-3 sm:flex-row lg:justify-start"
-            >
+            </p>
+            <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row lg:justify-start">
               <a
                 href="#projects"
                 className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#D6B37A] px-7 py-3.5 text-sm font-semibold text-[#0B0B0B] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_42px_-15px_rgba(214,179,122,0.9)]"
@@ -249,14 +171,8 @@ export function Hero() {
                 <Download className="h-4 w-4" />
                 Download Resume
               </a>
-            </motion.div>
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              animate="show"
-              custom={0.52}
-              className="mt-6 flex justify-center gap-3 lg:justify-start"
-            >
+            </div>
+            <div className="mt-6 flex justify-center gap-3 lg:justify-start">
               <SocialLink href={CONTACT.github} label="GitHub">
                 <Github className="h-4 w-4" />
               </SocialLink>
@@ -266,7 +182,7 @@ export function Hero() {
               <SocialLink href={`mailto:${CONTACT.email}`} label="Email">
                 <Mail className="h-4 w-4" />
               </SocialLink>
-            </motion.div>
+            </div>
           </div>
 
           <div className="relative lg:col-span-5">
@@ -277,12 +193,7 @@ export function Hero() {
           </div>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.75, delay: 0.65, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-8 grid rounded-3xl border border-white/10 bg-[#151515]/65 p-2 backdrop-blur-xl sm:grid-cols-2 lg:mt-2 lg:grid-cols-4"
-        >
+        <div className="mt-8 grid rounded-3xl border border-white/10 bg-[#151515]/65 p-2 backdrop-blur-xl sm:grid-cols-2 lg:mt-2 lg:grid-cols-4">
           {[
             ["2+", "Internships"],
             ["MCA", "JECRC University"],
@@ -296,7 +207,7 @@ export function Hero() {
               <p className="mt-1 text-xs uppercase tracking-[0.16em] text-neutral-500">{label}</p>
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
