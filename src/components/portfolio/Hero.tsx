@@ -36,12 +36,15 @@ function ProfilePortrait() {
           aria-hidden
           className="absolute inset-9 rounded-full bg-[radial-gradient(circle_at_50%_35%,rgba(231,199,138,0.25),transparent_66%)]"
         />
-        <div
-          className="absolute inset-7 overflow-hidden rounded-full border border-[#E7C78A]/20 bg-[#D6B37A]/10"
-        >
+        <div className="absolute inset-7 overflow-hidden rounded-full border border-[#E7C78A]/20 bg-[#D6B37A]/10">
           <img
             src="/ProfileImage.png"
             alt="Harsh Jain, Full Stack Developer"
+            width="542"
+            height="711"
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
             className="h-full w-full scale-110 object-cover object-top"
           />
         </div>
